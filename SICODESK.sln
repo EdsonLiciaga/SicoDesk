@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SICO", "SICO\SICO.csproj", "{053C1184-6351-4F4F-B899-CA2BBBDC98DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SICODesktop", "..\SICODesktop\SICODesktop\SICODesktop.csproj", "{5E5E2D97-97D6-4264-BF6A-2E8FF7BBD33D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{053C1184-6351-4F4F-B899-CA2BBBDC98DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053C1184-6351-4F4F-B899-CA2BBBDC98DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053C1184-6351-4F4F-B899-CA2BBBDC98DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053C1184-6351-4F4F-B899-CA2BBBDC98DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5E2D97-97D6-4264-BF6A-2E8FF7BBD33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5E2D97-97D6-4264-BF6A-2E8FF7BBD33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5E2D97-97D6-4264-BF6A-2E8FF7BBD33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5E2D97-97D6-4264-BF6A-2E8FF7BBD33D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F112C934-C6D4-44F6-9CF7-F0E3BDF71E8F}
+	EndGlobalSection
+EndGlobal
