@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SicoDBModelStoreContainer" CdmEntityContainer="SicoDBEntities">
+    <EntitySetMapping Name="compras">
+      <EntityTypeMapping TypeName="SicoDBModel.compras">
+        <MappingFragment StoreEntitySet="compras">
+          <ScalarProperty Name="id_compra" ColumnName="id_compra" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="folio_compra" ColumnName="folio_compra" />
+          <ScalarProperty Name="fecha_compra" ColumnName="fecha_compra" />
+          <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cotizaciones">
+      <EntityTypeMapping TypeName="SicoDBModel.cotizaciones">
+        <MappingFragment StoreEntitySet="cotizaciones">
+          <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+          <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+          <ScalarProperty Name="domicilio_cliente" ColumnName="domicilio_cliente" />
+          <ScalarProperty Name="telefono_cliente" ColumnName="telefono_cliente" />
+          <ScalarProperty Name="costo_cotizacion" ColumnName="costo_cotizacion" />
+          <ScalarProperty Name="anticipo" ColumnName="anticipo" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="dias_restantes" ColumnName="dias_restantes" />
+          <ScalarProperty Name="fecha_cotizacion" ColumnName="fecha_cotizacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="empleados">
+      <EntityTypeMapping TypeName="SicoDBModel.empleados">
+        <MappingFragment StoreEntitySet="empleados">
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="nombre_empleado" ColumnName="nombre_empleado" />
+          <ScalarProperty Name="apellidos_empleado" ColumnName="apellidos_empleado" />
+          <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+          <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+          <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
+          <ScalarProperty Name="correo_empleado" ColumnName="correo_empleado" />
+          <ScalarProperty Name="fecha_contratacion" ColumnName="fecha_contratacion" />
+          <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+          <ScalarProperty Name="estado_empleado" ColumnName="estado_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="materiales">
+      <EntityTypeMapping TypeName="SicoDBModel.materiales">
+        <MappingFragment StoreEntitySet="materiales">
+          <ScalarProperty Name="id_material" ColumnName="id_material" />
+          <ScalarProperty Name="id_tipo_material" ColumnName="id_tipo_material" />
+          <ScalarProperty Name="id_unidad_medida" ColumnName="id_unidad_medida" />
+          <ScalarProperty Name="nombre_material" ColumnName="nombre_material" />
+          <ScalarProperty Name="costo_material" ColumnName="costo_material" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordenes_de_trabajo">
+      <EntityTypeMapping TypeName="SicoDBModel.ordenes_de_trabajo">
+        <MappingFragment StoreEntitySet="ordenes_de_trabajo">
+          <ScalarProperty Name="id_orden_trabajo" ColumnName="id_orden_trabajo" />
+          <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+          <ScalarProperty Name="folio" ColumnName="folio" />
+          <ScalarProperty Name="fecha_orden_trabajo" ColumnName="fecha_orden_trabajo" />
+          <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+          <ScalarProperty Name="fecha_entrega" ColumnName="fecha_entrega" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productos">
+      <EntityTypeMapping TypeName="SicoDBModel.productos">
+        <MappingFragment StoreEntitySet="productos">
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="id_tipo_producto" ColumnName="id_tipo_producto" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="alto" ColumnName="alto" />
+          <ScalarProperty Name="ancho" ColumnName="ancho" />
+          <ScalarProperty Name="cantidad_producto" ColumnName="cantidad_producto" />
+          <ScalarProperty Name="costo_producto" ColumnName="costo_producto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="SicoDBModel.roles">
+        <MappingFragment StoreEntitySet="roles">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="tipo_rol" ColumnName="tipo_rol" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipos_de_material">
+      <EntityTypeMapping TypeName="SicoDBModel.tipos_de_material">
+        <MappingFragment StoreEntitySet="tipos_de_material">
+          <ScalarProperty Name="id_tipo_material" ColumnName="id_tipo_material" />
+          <ScalarProperty Name="tipo_material" ColumnName="tipo_material" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipos_de_producto">
+      <EntityTypeMapping TypeName="SicoDBModel.tipos_de_producto">
+        <MappingFragment StoreEntitySet="tipos_de_producto">
+          <ScalarProperty Name="id_tipo_producto" ColumnName="id_tipo_producto" />
+          <ScalarProperty Name="tipo_producto" ColumnName="tipo_producto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="unidades_de_medida">
+      <EntityTypeMapping TypeName="SicoDBModel.unidades_de_medida">
+        <MappingFragment StoreEntitySet="unidades_de_medida">
+          <ScalarProperty Name="id_unidad_medida" ColumnName="id_unidad_medida" />
+          <ScalarProperty Name="tipo_unidad_medida" ColumnName="tipo_unidad_medida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="materiales_has_compras">
+      <EntityTypeMapping TypeName="SicoDBModel.materiales_has_compras">
+        <MappingFragment StoreEntitySet="materiales_has_compras">
+          <ScalarProperty Name="id_material" ColumnName="id_material" />
+          <ScalarProperty Name="id_compra" ColumnName="id_compra" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="importe" ColumnName="importe" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productos_has_cotizaciones">
+      <EntityTypeMapping TypeName="SicoDBModel.productos_has_cotizaciones">
+        <MappingFragment StoreEntitySet="productos_has_cotizaciones">
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="costo_producto" ColumnName="costo_producto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productos_has_materiales">
+      <EntityTypeMapping TypeName="SicoDBModel.productos_has_materiales">
+        <MappingFragment StoreEntitySet="productos_has_materiales">
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="id_material" ColumnName="id_material" />
+          <ScalarProperty Name="material_requerido" ColumnName="material_requerido" />
+          <ScalarProperty Name="cantidad_requerida" ColumnName="cantidad_requerida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

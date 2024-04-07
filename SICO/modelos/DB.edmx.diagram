@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a53d1700f8114329903b38cf80cfd58a" Name="Diagram1">
+        <EntityTypeShape EntityType="SicoDBModel.compras" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.cotizaciones" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.empleados" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.materiales" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.ordenes_de_trabajo" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.productos" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.roles" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.tipos_de_material" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.tipos_de_producto" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.unidades_de_medida" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.materiales_has_compras" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.productos_has_cotizaciones" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SicoDBModel.productos_has_materiales" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SicoDBModel.fk_compras" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_empleados2" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_cotizaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_cotizaciones2" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_empleados" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_roles" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_materiales" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_materiales2" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_tipos_de_material" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_unidades_de_medida" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_productos2" ManuallyRouted="false" />
+        <AssociationConnector Association="SicoDBModel.fk_tipos_de_producto" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

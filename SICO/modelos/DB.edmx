@@ -1,0 +1,965 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SicoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="compras">
+          <Key>
+            <PropertyRef Name="id_compra" />
+          </Key>
+          <Property Name="id_compra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_empleado" Type="int" Nullable="false" />
+          <Property Name="folio_compra" Type="int" Nullable="false" />
+          <Property Name="fecha_compra" Type="date" Nullable="false" />
+          <Property Name="proveedor" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cotizaciones">
+          <Key>
+            <PropertyRef Name="id_cotizacion" />
+          </Key>
+          <Property Name="id_cotizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="folio" Type="int" Nullable="false" />
+          <Property Name="nombre_cliente" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="domicilio_cliente" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="telefono_cliente" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="costo_cotizacion" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="anticipo" Type="int" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+          <Property Name="dias_restantes" Type="int" Nullable="false" />
+          <Property Name="fecha_cotizacion" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_rol" Type="int" Nullable="false" />
+          <Property Name="nombre_empleado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="apellidos_empleado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="nombre_usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="telefono_empleado" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="correo_empleado" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="fecha_contratacion" Type="date" Nullable="false" />
+          <Property Name="fecha_actualizacion" Type="date" Nullable="false" />
+          <Property Name="estado_empleado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="materiales">
+          <Key>
+            <PropertyRef Name="id_material" />
+          </Key>
+          <Property Name="id_material" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tipo_material" Type="int" Nullable="false" />
+          <Property Name="id_unidad_medida" Type="int" Nullable="false" />
+          <Property Name="nombre_material" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="costo_material" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SicoDB.dbo.materiales_has_compras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="materiales_has_compras">
+          <Key>
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="id_compra" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="importe" />
+          </Key>
+          <Property Name="id_material" Type="int" Nullable="false" />
+          <Property Name="id_compra" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="importe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ordenes_de_trabajo">
+          <Key>
+            <PropertyRef Name="id_orden_trabajo" />
+          </Key>
+          <Property Name="id_orden_trabajo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cotizacion" Type="int" Nullable="false" />
+          <Property Name="folio" Type="int" Nullable="false" />
+          <Property Name="fecha_orden_trabajo" Type="date" Nullable="false" />
+          <Property Name="fecha_actualizacion" Type="date" Nullable="false" />
+          <Property Name="fecha_entrega" Type="date" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tipo_producto" Type="int" Nullable="false" />
+          <Property Name="id_empleado" Type="int" Nullable="false" />
+          <Property Name="alto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ancho" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cantidad_producto" Type="int" Nullable="false" />
+          <Property Name="costo_producto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SicoDB.dbo.productos_has_cotizaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="productos_has_cotizaciones">
+          <Key>
+            <PropertyRef Name="id_producto" />
+            <PropertyRef Name="id_cotizacion" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="costo_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" Nullable="false" />
+          <Property Name="id_cotizacion" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="costo_producto" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SicoDB.dbo.productos_has_materiales' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="productos_has_materiales">
+          <Key>
+            <PropertyRef Name="id_producto" />
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="material_requerido" />
+            <PropertyRef Name="cantidad_requerida" />
+          </Key>
+          <Property Name="id_producto" Type="int" Nullable="false" />
+          <Property Name="id_material" Type="int" Nullable="false" />
+          <Property Name="material_requerido" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="cantidad_requerida" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_rol" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipos_de_material">
+          <Key>
+            <PropertyRef Name="id_tipo_material" />
+          </Key>
+          <Property Name="id_tipo_material" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_material" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipos_de_producto">
+          <Key>
+            <PropertyRef Name="id_tipo_producto" />
+          </Key>
+          <Property Name="id_tipo_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_producto" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="unidades_de_medida">
+          <Key>
+            <PropertyRef Name="id_unidad_medida" />
+          </Key>
+          <Property Name="id_unidad_medida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tipo_unidad_medida" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_compras">
+          <End Role="compras" Type="Self.compras" Multiplicity="1" />
+          <End Role="materiales_has_compras" Type="Self.materiales_has_compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="compras">
+              <PropertyRef Name="id_compra" />
+            </Principal>
+            <Dependent Role="materiales_has_compras">
+              <PropertyRef Name="id_compra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cotizaciones">
+          <End Role="cotizaciones" Type="Self.cotizaciones" Multiplicity="1" />
+          <End Role="productos_has_cotizaciones" Type="Self.productos_has_cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Principal>
+            <Dependent Role="productos_has_cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cotizaciones2">
+          <End Role="cotizaciones" Type="Self.cotizaciones" Multiplicity="1" />
+          <End Role="ordenes_de_trabajo" Type="Self.ordenes_de_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Principal>
+            <Dependent Role="ordenes_de_trabajo">
+              <PropertyRef Name="id_cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleados">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleados2">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="compras" Type="Self.compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="compras">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_materiales">
+          <End Role="materiales" Type="Self.materiales" Multiplicity="1" />
+          <End Role="materiales_has_compras" Type="Self.materiales_has_compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materiales">
+              <PropertyRef Name="id_material" />
+            </Principal>
+            <Dependent Role="materiales_has_compras">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_materiales2">
+          <End Role="materiales" Type="Self.materiales" Multiplicity="1" />
+          <End Role="productos_has_materiales" Type="Self.productos_has_materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materiales">
+              <PropertyRef Name="id_material" />
+            </Principal>
+            <Dependent Role="productos_has_materiales">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_productos">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="productos_has_materiales" Type="Self.productos_has_materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="productos_has_materiales">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_productos2">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="productos_has_cotizaciones" Type="Self.productos_has_cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="productos_has_cotizaciones">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_roles">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="empleados" Type="Self.empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipos_de_material">
+          <End Role="tipos_de_material" Type="Self.tipos_de_material" Multiplicity="1" />
+          <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_de_material">
+              <PropertyRef Name="id_tipo_material" />
+            </Principal>
+            <Dependent Role="materiales">
+              <PropertyRef Name="id_tipo_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipos_de_producto">
+          <End Role="tipos_de_producto" Type="Self.tipos_de_producto" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_de_producto">
+              <PropertyRef Name="id_tipo_producto" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_tipo_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_unidades_de_medida">
+          <End Role="unidades_de_medida" Type="Self.unidades_de_medida" Multiplicity="1" />
+          <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unidades_de_medida">
+              <PropertyRef Name="id_unidad_medida" />
+            </Principal>
+            <Dependent Role="materiales">
+              <PropertyRef Name="id_unidad_medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SicoDBModelStoreContainer">
+          <EntitySet Name="compras" EntityType="Self.compras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cotizaciones" EntityType="Self.cotizaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empleados" EntityType="Self.empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="materiales" EntityType="Self.materiales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ordenes_de_trabajo" EntityType="Self.ordenes_de_trabajo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productos" EntityType="Self.productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipos_de_material" EntityType="Self.tipos_de_material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipos_de_producto" EntityType="Self.tipos_de_producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unidades_de_medida" EntityType="Self.unidades_de_medida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="materiales_has_compras" EntityType="Self.materiales_has_compras" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [materiales_has_compras].[id_material] AS [id_material], 
+    [materiales_has_compras].[id_compra] AS [id_compra], 
+    [materiales_has_compras].[cantidad] AS [cantidad], 
+    [materiales_has_compras].[importe] AS [importe]
+    FROM [dbo].[materiales_has_compras] AS [materiales_has_compras]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="productos_has_cotizaciones" EntityType="Self.productos_has_cotizaciones" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [productos_has_cotizaciones].[id_producto] AS [id_producto], 
+    [productos_has_cotizaciones].[id_cotizacion] AS [id_cotizacion], 
+    [productos_has_cotizaciones].[cantidad] AS [cantidad], 
+    [productos_has_cotizaciones].[costo_producto] AS [costo_producto]
+    FROM [dbo].[productos_has_cotizaciones] AS [productos_has_cotizaciones]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="productos_has_materiales" EntityType="Self.productos_has_materiales" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [productos_has_materiales].[id_producto] AS [id_producto], 
+    [productos_has_materiales].[id_material] AS [id_material], 
+    [productos_has_materiales].[material_requerido] AS [material_requerido], 
+    [productos_has_materiales].[cantidad_requerida] AS [cantidad_requerida]
+    FROM [dbo].[productos_has_materiales] AS [productos_has_materiales]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_compras" Association="Self.fk_compras">
+            <End Role="compras" EntitySet="compras" />
+            <End Role="materiales_has_compras" EntitySet="materiales_has_compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cotizaciones" Association="Self.fk_cotizaciones">
+            <End Role="cotizaciones" EntitySet="cotizaciones" />
+            <End Role="productos_has_cotizaciones" EntitySet="productos_has_cotizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cotizaciones2" Association="Self.fk_cotizaciones2">
+            <End Role="cotizaciones" EntitySet="cotizaciones" />
+            <End Role="ordenes_de_trabajo" EntitySet="ordenes_de_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleados" Association="Self.fk_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleados2" Association="Self.fk_empleados2">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="compras" EntitySet="compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_materiales" Association="Self.fk_materiales">
+            <End Role="materiales" EntitySet="materiales" />
+            <End Role="materiales_has_compras" EntitySet="materiales_has_compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_materiales2" Association="Self.fk_materiales2">
+            <End Role="materiales" EntitySet="materiales" />
+            <End Role="productos_has_materiales" EntitySet="productos_has_materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_productos" Association="Self.fk_productos">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_has_materiales" EntitySet="productos_has_materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_productos2" Association="Self.fk_productos2">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_has_cotizaciones" EntitySet="productos_has_cotizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_roles" Association="Self.fk_roles">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipos_de_material" Association="Self.fk_tipos_de_material">
+            <End Role="tipos_de_material" EntitySet="tipos_de_material" />
+            <End Role="materiales" EntitySet="materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipos_de_producto" Association="Self.fk_tipos_de_producto">
+            <End Role="tipos_de_producto" EntitySet="tipos_de_producto" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_unidades_de_medida" Association="Self.fk_unidades_de_medida">
+            <End Role="unidades_de_medida" EntitySet="unidades_de_medida" />
+            <End Role="materiales" EntitySet="materiales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SicoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="compras">
+          <Key>
+            <PropertyRef Name="id_compra" />
+          </Key>
+          <Property Name="id_compra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_empleado" Type="Int32" Nullable="false" />
+          <Property Name="folio_compra" Type="Int32" Nullable="false" />
+          <Property Name="fecha_compra" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="proveedor" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="materiales_has_compras" Relationship="Self.fk_compras" FromRole="compras" ToRole="materiales_has_compras" />
+          <NavigationProperty Name="empleados" Relationship="Self.fk_empleados2" FromRole="compras" ToRole="empleados" />
+        </EntityType>
+        <EntityType Name="cotizaciones">
+          <Key>
+            <PropertyRef Name="id_cotizacion" />
+          </Key>
+          <Property Name="id_cotizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="folio" Type="Int32" Nullable="false" />
+          <Property Name="nombre_cliente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="domicilio_cliente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono_cliente" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="costo_cotizacion" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="anticipo" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="dias_restantes" Type="Int32" Nullable="false" />
+          <Property Name="fecha_cotizacion" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="productos_has_cotizaciones" Relationship="Self.fk_cotizaciones" FromRole="cotizaciones" ToRole="productos_has_cotizaciones" />
+          <NavigationProperty Name="ordenes_de_trabajo" Relationship="Self.fk_cotizaciones2" FromRole="cotizaciones" ToRole="ordenes_de_trabajo" />
+        </EntityType>
+        <EntityType Name="empleados">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_rol" Type="Int32" Nullable="false" />
+          <Property Name="nombre_empleado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos_empleado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasena" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono_empleado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_empleado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_contratacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado_empleado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="compras" Relationship="Self.fk_empleados2" FromRole="empleados" ToRole="compras" />
+          <NavigationProperty Name="productos" Relationship="Self.fk_empleados" FromRole="empleados" ToRole="productos" />
+          <NavigationProperty Name="roles" Relationship="Self.fk_roles" FromRole="empleados" ToRole="roles" />
+        </EntityType>
+        <EntityType Name="materiales">
+          <Key>
+            <PropertyRef Name="id_material" />
+          </Key>
+          <Property Name="id_material" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tipo_material" Type="Int32" Nullable="false" />
+          <Property Name="id_unidad_medida" Type="Int32" Nullable="false" />
+          <Property Name="nombre_material" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="costo_material" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="materiales_has_compras" Relationship="Self.fk_materiales" FromRole="materiales" ToRole="materiales_has_compras" />
+          <NavigationProperty Name="productos_has_materiales" Relationship="Self.fk_materiales2" FromRole="materiales" ToRole="productos_has_materiales" />
+          <NavigationProperty Name="tipos_de_material" Relationship="Self.fk_tipos_de_material" FromRole="materiales" ToRole="tipos_de_material" />
+          <NavigationProperty Name="unidades_de_medida" Relationship="Self.fk_unidades_de_medida" FromRole="materiales" ToRole="unidades_de_medida" />
+        </EntityType>
+        <EntityType Name="ordenes_de_trabajo">
+          <Key>
+            <PropertyRef Name="id_orden_trabajo" />
+          </Key>
+          <Property Name="id_orden_trabajo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cotizacion" Type="Int32" Nullable="false" />
+          <Property Name="folio" Type="Int32" Nullable="false" />
+          <Property Name="fecha_orden_trabajo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_entrega" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cotizaciones" Relationship="Self.fk_cotizaciones2" FromRole="ordenes_de_trabajo" ToRole="cotizaciones" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tipo_producto" Type="Int32" Nullable="false" />
+          <Property Name="id_empleado" Type="Int32" Nullable="false" />
+          <Property Name="alto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ancho" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="cantidad_producto" Type="Int32" Nullable="false" />
+          <Property Name="costo_producto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="empleados" Relationship="Self.fk_empleados" FromRole="productos" ToRole="empleados" />
+          <NavigationProperty Name="productos_has_materiales" Relationship="Self.fk_productos" FromRole="productos" ToRole="productos_has_materiales" />
+          <NavigationProperty Name="productos_has_cotizaciones" Relationship="Self.fk_productos2" FromRole="productos" ToRole="productos_has_cotizaciones" />
+          <NavigationProperty Name="tipos_de_producto" Relationship="Self.fk_tipos_de_producto" FromRole="productos" ToRole="tipos_de_producto" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_rol" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="empleados" Relationship="Self.fk_roles" FromRole="roles" ToRole="empleados" />
+        </EntityType>
+        <EntityType Name="tipos_de_material">
+          <Key>
+            <PropertyRef Name="id_tipo_material" />
+          </Key>
+          <Property Name="id_tipo_material" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_material" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="materiales" Relationship="Self.fk_tipos_de_material" FromRole="tipos_de_material" ToRole="materiales" />
+        </EntityType>
+        <EntityType Name="tipos_de_producto">
+          <Key>
+            <PropertyRef Name="id_tipo_producto" />
+          </Key>
+          <Property Name="id_tipo_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_producto" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="productos" Relationship="Self.fk_tipos_de_producto" FromRole="tipos_de_producto" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="unidades_de_medida">
+          <Key>
+            <PropertyRef Name="id_unidad_medida" />
+          </Key>
+          <Property Name="id_unidad_medida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipo_unidad_medida" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="materiales" Relationship="Self.fk_unidades_de_medida" FromRole="unidades_de_medida" ToRole="materiales" />
+        </EntityType>
+        <EntityType Name="materiales_has_compras">
+          <Key>
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="id_compra" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="importe" />
+          </Key>
+          <Property Name="id_material" Type="Int32" Nullable="false" />
+          <Property Name="id_compra" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="importe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="compras" Relationship="Self.fk_compras" FromRole="materiales_has_compras" ToRole="compras" />
+          <NavigationProperty Name="materiales" Relationship="Self.fk_materiales" FromRole="materiales_has_compras" ToRole="materiales" />
+        </EntityType>
+        <EntityType Name="productos_has_cotizaciones">
+          <Key>
+            <PropertyRef Name="id_producto" />
+            <PropertyRef Name="id_cotizacion" />
+            <PropertyRef Name="cantidad" />
+            <PropertyRef Name="costo_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" />
+          <Property Name="id_cotizacion" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="costo_producto" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="cotizaciones" Relationship="Self.fk_cotizaciones" FromRole="productos_has_cotizaciones" ToRole="cotizaciones" />
+          <NavigationProperty Name="productos" Relationship="Self.fk_productos2" FromRole="productos_has_cotizaciones" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="productos_has_materiales">
+          <Key>
+            <PropertyRef Name="id_producto" />
+            <PropertyRef Name="id_material" />
+            <PropertyRef Name="material_requerido" />
+            <PropertyRef Name="cantidad_requerida" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" />
+          <Property Name="id_material" Type="Int32" Nullable="false" />
+          <Property Name="material_requerido" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidad_requerida" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="materiales" Relationship="Self.fk_materiales2" FromRole="productos_has_materiales" ToRole="materiales" />
+          <NavigationProperty Name="productos" Relationship="Self.fk_productos" FromRole="productos_has_materiales" ToRole="productos" />
+        </EntityType>
+        <Association Name="fk_compras">
+          <End Role="compras" Type="Self.compras" Multiplicity="1" />
+          <End Role="materiales_has_compras" Type="Self.materiales_has_compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="compras">
+              <PropertyRef Name="id_compra" />
+            </Principal>
+            <Dependent Role="materiales_has_compras">
+              <PropertyRef Name="id_compra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleados2">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="compras" Type="Self.compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="compras">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cotizaciones">
+          <End Role="cotizaciones" Type="Self.cotizaciones" Multiplicity="1" />
+          <End Role="productos_has_cotizaciones" Type="Self.productos_has_cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Principal>
+            <Dependent Role="productos_has_cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cotizaciones2">
+          <End Role="cotizaciones" Type="Self.cotizaciones" Multiplicity="1" />
+          <End Role="ordenes_de_trabajo" Type="Self.ordenes_de_trabajo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cotizaciones">
+              <PropertyRef Name="id_cotizacion" />
+            </Principal>
+            <Dependent Role="ordenes_de_trabajo">
+              <PropertyRef Name="id_cotizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleados">
+          <End Role="empleados" Type="Self.empleados" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleados">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_roles">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="empleados" Type="Self.empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="empleados">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_materiales">
+          <End Role="materiales" Type="Self.materiales" Multiplicity="1" />
+          <End Role="materiales_has_compras" Type="Self.materiales_has_compras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materiales">
+              <PropertyRef Name="id_material" />
+            </Principal>
+            <Dependent Role="materiales_has_compras">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_materiales2">
+          <End Role="materiales" Type="Self.materiales" Multiplicity="1" />
+          <End Role="productos_has_materiales" Type="Self.productos_has_materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="materiales">
+              <PropertyRef Name="id_material" />
+            </Principal>
+            <Dependent Role="productos_has_materiales">
+              <PropertyRef Name="id_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipos_de_material">
+          <End Role="tipos_de_material" Type="Self.tipos_de_material" Multiplicity="1" />
+          <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_de_material">
+              <PropertyRef Name="id_tipo_material" />
+            </Principal>
+            <Dependent Role="materiales">
+              <PropertyRef Name="id_tipo_material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_unidades_de_medida">
+          <End Role="unidades_de_medida" Type="Self.unidades_de_medida" Multiplicity="1" />
+          <End Role="materiales" Type="Self.materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unidades_de_medida">
+              <PropertyRef Name="id_unidad_medida" />
+            </Principal>
+            <Dependent Role="materiales">
+              <PropertyRef Name="id_unidad_medida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_productos">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="productos_has_materiales" Type="Self.productos_has_materiales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="productos_has_materiales">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_productos2">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="productos_has_cotizaciones" Type="Self.productos_has_cotizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="productos_has_cotizaciones">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tipos_de_producto">
+          <End Role="tipos_de_producto" Type="Self.tipos_de_producto" Multiplicity="1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipos_de_producto">
+              <PropertyRef Name="id_tipo_producto" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_tipo_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SicoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="compras" EntityType="Self.compras" />
+          <EntitySet Name="cotizaciones" EntityType="Self.cotizaciones" />
+          <EntitySet Name="empleados" EntityType="Self.empleados" />
+          <EntitySet Name="materiales" EntityType="Self.materiales" />
+          <EntitySet Name="ordenes_de_trabajo" EntityType="Self.ordenes_de_trabajo" />
+          <EntitySet Name="productos" EntityType="Self.productos" />
+          <EntitySet Name="roles" EntityType="Self.roles" />
+          <EntitySet Name="tipos_de_material" EntityType="Self.tipos_de_material" />
+          <EntitySet Name="tipos_de_producto" EntityType="Self.tipos_de_producto" />
+          <EntitySet Name="unidades_de_medida" EntityType="Self.unidades_de_medida" />
+          <EntitySet Name="materiales_has_compras" EntityType="Self.materiales_has_compras" />
+          <EntitySet Name="productos_has_cotizaciones" EntityType="Self.productos_has_cotizaciones" />
+          <EntitySet Name="productos_has_materiales" EntityType="Self.productos_has_materiales" />
+          <AssociationSet Name="fk_compras" Association="Self.fk_compras">
+            <End Role="compras" EntitySet="compras" />
+            <End Role="materiales_has_compras" EntitySet="materiales_has_compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleados2" Association="Self.fk_empleados2">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="compras" EntitySet="compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cotizaciones" Association="Self.fk_cotizaciones">
+            <End Role="cotizaciones" EntitySet="cotizaciones" />
+            <End Role="productos_has_cotizaciones" EntitySet="productos_has_cotizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cotizaciones2" Association="Self.fk_cotizaciones2">
+            <End Role="cotizaciones" EntitySet="cotizaciones" />
+            <End Role="ordenes_de_trabajo" EntitySet="ordenes_de_trabajo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleados" Association="Self.fk_empleados">
+            <End Role="empleados" EntitySet="empleados" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_roles" Association="Self.fk_roles">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="empleados" EntitySet="empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_materiales" Association="Self.fk_materiales">
+            <End Role="materiales" EntitySet="materiales" />
+            <End Role="materiales_has_compras" EntitySet="materiales_has_compras" />
+          </AssociationSet>
+          <AssociationSet Name="fk_materiales2" Association="Self.fk_materiales2">
+            <End Role="materiales" EntitySet="materiales" />
+            <End Role="productos_has_materiales" EntitySet="productos_has_materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipos_de_material" Association="Self.fk_tipos_de_material">
+            <End Role="tipos_de_material" EntitySet="tipos_de_material" />
+            <End Role="materiales" EntitySet="materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_unidades_de_medida" Association="Self.fk_unidades_de_medida">
+            <End Role="unidades_de_medida" EntitySet="unidades_de_medida" />
+            <End Role="materiales" EntitySet="materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_productos" Association="Self.fk_productos">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_has_materiales" EntitySet="productos_has_materiales" />
+          </AssociationSet>
+          <AssociationSet Name="fk_productos2" Association="Self.fk_productos2">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="productos_has_cotizaciones" EntitySet="productos_has_cotizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tipos_de_producto" Association="Self.fk_tipos_de_producto">
+            <End Role="tipos_de_producto" EntitySet="tipos_de_producto" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SicoDBModelStoreContainer" CdmEntityContainer="SicoDBEntities">
+          <EntitySetMapping Name="compras">
+            <EntityTypeMapping TypeName="SicoDBModel.compras">
+              <MappingFragment StoreEntitySet="compras">
+                <ScalarProperty Name="id_compra" ColumnName="id_compra" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="folio_compra" ColumnName="folio_compra" />
+                <ScalarProperty Name="fecha_compra" ColumnName="fecha_compra" />
+                <ScalarProperty Name="proveedor" ColumnName="proveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cotizaciones">
+            <EntityTypeMapping TypeName="SicoDBModel.cotizaciones">
+              <MappingFragment StoreEntitySet="cotizaciones">
+                <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+                <ScalarProperty Name="domicilio_cliente" ColumnName="domicilio_cliente" />
+                <ScalarProperty Name="telefono_cliente" ColumnName="telefono_cliente" />
+                <ScalarProperty Name="costo_cotizacion" ColumnName="costo_cotizacion" />
+                <ScalarProperty Name="anticipo" ColumnName="anticipo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="dias_restantes" ColumnName="dias_restantes" />
+                <ScalarProperty Name="fecha_cotizacion" ColumnName="fecha_cotizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleados">
+            <EntityTypeMapping TypeName="SicoDBModel.empleados">
+              <MappingFragment StoreEntitySet="empleados">
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="nombre_empleado" ColumnName="nombre_empleado" />
+                <ScalarProperty Name="apellidos_empleado" ColumnName="apellidos_empleado" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
+                <ScalarProperty Name="correo_empleado" ColumnName="correo_empleado" />
+                <ScalarProperty Name="fecha_contratacion" ColumnName="fecha_contratacion" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+                <ScalarProperty Name="estado_empleado" ColumnName="estado_empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="materiales">
+            <EntityTypeMapping TypeName="SicoDBModel.materiales">
+              <MappingFragment StoreEntitySet="materiales">
+                <ScalarProperty Name="id_material" ColumnName="id_material" />
+                <ScalarProperty Name="id_tipo_material" ColumnName="id_tipo_material" />
+                <ScalarProperty Name="id_unidad_medida" ColumnName="id_unidad_medida" />
+                <ScalarProperty Name="nombre_material" ColumnName="nombre_material" />
+                <ScalarProperty Name="costo_material" ColumnName="costo_material" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordenes_de_trabajo">
+            <EntityTypeMapping TypeName="SicoDBModel.ordenes_de_trabajo">
+              <MappingFragment StoreEntitySet="ordenes_de_trabajo">
+                <ScalarProperty Name="id_orden_trabajo" ColumnName="id_orden_trabajo" />
+                <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="fecha_orden_trabajo" ColumnName="fecha_orden_trabajo" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+                <ScalarProperty Name="fecha_entrega" ColumnName="fecha_entrega" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos">
+            <EntityTypeMapping TypeName="SicoDBModel.productos">
+              <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_tipo_producto" ColumnName="id_tipo_producto" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="alto" ColumnName="alto" />
+                <ScalarProperty Name="ancho" ColumnName="ancho" />
+                <ScalarProperty Name="cantidad_producto" ColumnName="cantidad_producto" />
+                <ScalarProperty Name="costo_producto" ColumnName="costo_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="SicoDBModel.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="tipo_rol" ColumnName="tipo_rol" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipos_de_material">
+            <EntityTypeMapping TypeName="SicoDBModel.tipos_de_material">
+              <MappingFragment StoreEntitySet="tipos_de_material">
+                <ScalarProperty Name="id_tipo_material" ColumnName="id_tipo_material" />
+                <ScalarProperty Name="tipo_material" ColumnName="tipo_material" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipos_de_producto">
+            <EntityTypeMapping TypeName="SicoDBModel.tipos_de_producto">
+              <MappingFragment StoreEntitySet="tipos_de_producto">
+                <ScalarProperty Name="id_tipo_producto" ColumnName="id_tipo_producto" />
+                <ScalarProperty Name="tipo_producto" ColumnName="tipo_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unidades_de_medida">
+            <EntityTypeMapping TypeName="SicoDBModel.unidades_de_medida">
+              <MappingFragment StoreEntitySet="unidades_de_medida">
+                <ScalarProperty Name="id_unidad_medida" ColumnName="id_unidad_medida" />
+                <ScalarProperty Name="tipo_unidad_medida" ColumnName="tipo_unidad_medida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="materiales_has_compras">
+            <EntityTypeMapping TypeName="SicoDBModel.materiales_has_compras">
+              <MappingFragment StoreEntitySet="materiales_has_compras">
+                <ScalarProperty Name="id_material" ColumnName="id_material" />
+                <ScalarProperty Name="id_compra" ColumnName="id_compra" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="importe" ColumnName="importe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos_has_cotizaciones">
+            <EntityTypeMapping TypeName="SicoDBModel.productos_has_cotizaciones">
+              <MappingFragment StoreEntitySet="productos_has_cotizaciones">
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_cotizacion" ColumnName="id_cotizacion" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="costo_producto" ColumnName="costo_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos_has_materiales">
+            <EntityTypeMapping TypeName="SicoDBModel.productos_has_materiales">
+              <MappingFragment StoreEntitySet="productos_has_materiales">
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_material" ColumnName="id_material" />
+                <ScalarProperty Name="material_requerido" ColumnName="material_requerido" />
+                <ScalarProperty Name="cantidad_requerida" ColumnName="cantidad_requerida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
